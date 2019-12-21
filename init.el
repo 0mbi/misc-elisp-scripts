@@ -30,10 +30,39 @@
   (setq standard-indent 2)
   (setq indent-tabs-mode nil)))
 
-(helm-mode 1)
-(global-set-key (kbd "M-x") #'helm-M-x)
-(global-set-key (kbd "C-x r b") #'helm-filtered-bookmarks)
-(global-set-key (kbd "C-x C-f") #'helm-find-files)
+;; helm
+
+;; begin helm
+(use-package helm
+  :defer 2
+  :diminish helm-mode
+  :bind (("C-x C-f" . helm-find-files)
+         ("M-x" . helm-M-x)
+         ("C-x b" . helm-mini)
+         ("C-x C-b" . helm-mini)
+         ("M-y" . helm-show-kill-ring)
+         :map helm-map
+         ("<tab>" . helm-execute-persistent-action) ; Rebind TAB to expand
+         ("C-i" . helm-execute-persistent-action) ; Make TAB work in CLI
+         ("C-z" . helm-select-action)) ; List actions using C-z
+  :config
+  (progn
+    (setq helm-buffer-max-length nil) ;; Size according to longest buffer name
+    (setq helm-split-window-in-side-p t)
+    (helm-mode 1)))
+
+(use-package helm-fuzzier
+  :defer 2
+  :config
+  (progn
+    (setq helm-mode-fuzzy-match t
+          helm-M-x-fuzzy-match t
+          helm-buffers-fuzzy-match t
+          helm-recentf-fuzzy-match t)
+    (helm-fuzzier-mode 1)))
+
+(use-package helm-ag)
+;; end helm
 
 (global-set-key (kbd "C-x g") 'magit-status) ; "Most Magit commands are commonly invoked from the status buffer"
 
