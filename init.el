@@ -137,9 +137,13 @@
   )
 
 (defun mh/after-save()
-  (magit-call-git "add" buffer-file-name)
-  (magit-call-git "commit" "-m" "Needs Rebase: Auto Aftersave")
-  (magit-refresh)
+  (interactive)
+  (if (y-or-n-p)
+       ((magit-call-git "add" buffer-file-name)
+       (magit-call-git "commit" "-m" "Needs Rebase: Auto Aftersave")
+       (magit-refresh)
+       )
+    )
   )
 
 (add-hook 'before-save-hook 'mh/before-save)
