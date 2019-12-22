@@ -137,7 +137,11 @@
   )
 
 (defun mh/after-save()
-  "Ask if autocommit to git repository"
+  "Ask if autocommit to git repository
+
+  It includes the actual date as a identifier for
+  autocommit messages.
+  "
   (interactive)
   (if (y-or-n-p "Do you want to autocommit (y/n)?)")
       (progn
