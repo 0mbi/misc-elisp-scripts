@@ -48,6 +48,7 @@
   :config
   (progn
     (setq helm-buffer-max-length nil) ;; Size according to longest buffer name
+
     (setq helm-split-window-in-side-p t)
     (helm-mode 1)))
 
@@ -94,11 +95,12 @@
 (setq company-tooltip-align-annotations t)
 ;;end rust
 
-;; begin rust
+;; begin theming
 (load-theme 'spacemacs-dark t)
 (load-theme 'spacemacs-light t)
 (disable-theme 'spacemacs-light)
 (disable-theme 'spacemacs-dark)
+(enable-theme 'spacemacs-dark)
 
 (defun mh/spacemacs-dark ()
   (interactive)
@@ -114,9 +116,9 @@
 
 (global-set-key "\C-cti" 'mh/spacemacs-light)
 (global-set-key "\C-ctd" 'mh/spacemacs-dark)
-;; end rust
+;; end theming
 
-;; begin emacs convenience 
+;; begin emacs convenience
 (menu-bar-mode -1)
 (tool-bar-mode -1)                  ; Disable the button bar atop screen
 (scroll-bar-mode -1)                ; Disable scroll bar
@@ -127,12 +129,21 @@
 (setq tab-width 2)                  ; Four spaces is a tab
 (setq visible-bell nil)             ; Disable annoying visual bell graphic
 (setq ring-bell-function 'ignore)   ; Disable super annoying audio bell
-;;end emacs convenience 
+;;end emacs convenience
 
 ;; begin on save hook
-(defun mh/save-hook()
-  (add-hook 'before-save-hook 'delete-trailing-whitespace)
+(defun mh/before-save()
+  (delete-trailing-whitespace)
   )
+
+(defun mh/after-save()
+  (magit-call-git "add" buffer-file-name)
+  (magit-call-git "commit" "-m" "Needs Rebase: Auto Aftersave")
+  (magit-refresh)
+  )
+
+(add-hook 'before-save-hook 'mh/before-save)
+(add-hook 'after-save-hook 'mh/after-save)
 ;; end save hook
 
 (fset 'kill-actual-buffer
@@ -153,4 +164,3 @@
 
 (require 'lsp-mode)
 (add-hook 'rust-mode-hook #'lsp)
-
