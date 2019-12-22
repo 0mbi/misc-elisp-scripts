@@ -78,6 +78,7 @@
   (setq org-agenda-files (quote ("~/projects/notes_privat")))
 )
 
+;; begin rust
 (setq racer-rust-src-path nil) ;; read from shell-nix
 (setq racer-cmd "racer") ;; read from shell-nix
 (add-hook 'rust-mode-hook #'racer-mode)
@@ -91,31 +92,31 @@
 (require 'rust-mode)
 (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
 (setq company-tooltip-align-annotations t)
+;;end rust
 
-(load-theme 'monokai-alt t)
-(load-theme 'whiteboard t)
-(disable-theme 'monokai-alt)
-(disable-theme 'whiteboard)
+;; begin rust
+(load-theme 'spacemacs-dark t)
+(load-theme 'spacemacs-light t)
+(disable-theme 'spacemacs-light)
+(disable-theme 'spacemacs-dark)
 
-(defun mh/load-whiteboard-theme ()
-  "load whiteboard theme"
+(defun mh/spacemacs-dark ()
   (interactive)
-  (message "whiteboard loaded")
-  (disable-theme 'monokai-alt)
-  (enable-theme 'whiteboard)
-)
+  (disable-theme 'spacemacs-light)
+  (enable-theme 'spacemacs-dark)
+  )
 
-(defun mh/load-monokai-theme ()
-  "load monokai theme"
+(defun mh/spacemacs-light ()
   (interactive)
-  (message "monokai loaded")
-  (disable-theme 'whiteboard)
-  (enable-theme 'monokai-alt)
-)
+  (disable-theme 'spacemacs-dark)
+  (enable-theme 'spacemacs-light)
+  )
 
-(global-set-key "\C-ctw" 'mh/load-whiteboard-theme)
-(global-set-key "\C-ctm" 'mh/load-monokai-theme)
+(global-set-key "\C-cti" 'mh/spacemacs-light)
+(global-set-key "\C-ctd" 'mh/spacemacs-dark)
+;; end rust
 
+;; begin emacs convenience 
 (menu-bar-mode -1)
 (tool-bar-mode -1)                  ; Disable the button bar atop screen
 (scroll-bar-mode -1)                ; Disable scroll bar
@@ -126,7 +127,13 @@
 (setq tab-width 2)                  ; Four spaces is a tab
 (setq visible-bell nil)             ; Disable annoying visual bell graphic
 (setq ring-bell-function 'ignore)   ; Disable super annoying audio bell
+;;end emacs convenience 
 
+;; begin on save hook
+(defun mh/save-hook()
+  (add-hook 'before-save-hook 'delete-trailing-whitespace)
+  )
+;; end save hook
 
 (fset 'kill-actual-buffer
   [?\C-x ?k return])
