@@ -146,7 +146,7 @@
   (if (y-or-n-p "Do you want to autocommit (y/n)?)")
       (progn
        (magit-call-git "add" buffer-file-name)
-       (magit-call-git "commit" "-m" "Autocommit")
+       (magit-call-git "commit" "-m" (format "Autocommit %s" (current-time-string)))
        (magit-refresh)
        )
     )
