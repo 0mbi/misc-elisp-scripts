@@ -13,13 +13,19 @@
 
 
 ;; Evil Mode
+;;
+;;
 (require 'evil)
 (evil-mode 1)
+
+;; TODO check if this is any useful
 ;; (require 'evil-org)
 ;; (add-hook 'org-mode-hook 'evil-org-mode)
 ;; (evil-org-set-key-theme '(navigation insert textobjects additional calendar))
 ;; (require 'evil-org-agenda)
 ;; (evil-org-agenda-set-keys)
+
+;; evil ends here
 
 (setq godoc-and-godef-command "go doc") ;godoc has no cli support any more, thats go doc now
 (add-to-list 'exec-path "~/go/bin")
@@ -137,18 +143,13 @@
   )
 
 (defun mh/after-save()
-  "Ask if autocommit to git repository
+  "Reminds the user to to call magit-status
 
-  It includes the actual date as a identifier for
-  autocommit messages.
+  magit-status to add, commit, push
   "
   (interactive)
-  (if (y-or-n-p "Do you want to autocommit (y/n)?)")
-      (progn
-       (magit-call-git "add" buffer-file-name)
-       (magit-call-git "commit" "-m" (format "Autocommit %s" (current-time-string)))
-       (magit-refresh)
-       )
+  (if (y-or-n-p "Call magit-status (y/n)?)")
+      (magit-status)
     )
   )
 
@@ -175,6 +176,17 @@
 (require 'lsp-mode)
 (add-hook 'rust-mode-hook #'lsp)
 
+;;; emacs-convenience.el -- My emacs convenience settings
+;;;
+;;; global settings for all buffers
+
+(progn
+  (global-hl-line-mode)
+  (global-linum-mode)
+  (global-company-mode)
+  )
+
+;;; emacs-convenience.el ends here
 
 ;;; exwm.el -- My EXWM init file
 ;;; Commentary:
