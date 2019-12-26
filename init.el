@@ -120,7 +120,7 @@
   (enable-theme 'spacemacs-light)
   )
 
-(global-set-key "\C-cti" 'mh/spacemacs-light)
+(global-set-key "\C-ctl" 'mh/spacemacs-light)
 (global-set-key "\C-ctd" 'mh/spacemacs-dark)
 ;; end theming
 
