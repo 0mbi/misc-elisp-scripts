@@ -184,6 +184,7 @@
   (global-hl-line-mode)
   (global-linum-mode)
   (global-company-mode)
+  (setq auto-save-default nil)
   )
 
 ;;; emacs-convenience.el ends here
