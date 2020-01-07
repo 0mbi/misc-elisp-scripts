@@ -18,7 +18,7 @@
    struct Identifier {
    ...
    }
-   and adds Identifier to returned list 
+   and adds Identifier to returned list
   "
   (interactive)
    (save-excursion
@@ -39,9 +39,9 @@
 
 (ert-deftest extract-between-curly-brackets ()
   (with-temp-buffer
-    (insert-file-contents "componentes-for-elisp.rs")
+    (insert-file-contents "foo.txt")
     (goto-char 1)
-    (should (equal (mh/components) ("Player" "Hitpoints" "NPCs")))
+    (should (equal (mh/between-curly-brackets) ("foo")))
     )
   )
 
@@ -62,4 +62,3 @@ vi style of % jumping to matching brace."
         ((looking-at "\\s\)") (forward-char 1) (backward-list 1))
         (t (self-insert-command (or arg 1))))
   )
-

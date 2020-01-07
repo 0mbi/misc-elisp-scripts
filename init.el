@@ -267,6 +267,10 @@
   ;; Make it possible to do exwm-reset
   (exwm-input-set-key (kbd "s-r") 'exwm-input-grab-keyboard)
 
+  ; test
+  (setq exwm-workspace-show-all-buffers t)
+  (setq exwm-layout-show-all-buffers t)
+
   (add-hook 'exwm-update-class-hook
             (lambda ()
               (exwm-workspace-rename-buffer exwm-class-name)))
