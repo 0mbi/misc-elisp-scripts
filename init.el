@@ -253,7 +253,7 @@
 ;; Set up randr support
 (progn
   (require 'exwm-randr)
-  (setq exwm-randr-workspace-monitor-plist '(1 "eDP1" 9 "HDMI1"))
+  (setq exwm-randr-workspace-monitor-plist '(1 "eDP1" 2 "DP-2-2-8" 9 "DP-2-3"))
   (exwm-randr-enable))
 
 (progn
