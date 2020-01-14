@@ -212,7 +212,7 @@
 (progn
   (defun exwm-run-systemd (command)
     (interactive (list (read-shell-command "$ ")))
-    (let ((cmd (concat "@systemd@/bin/systemd-run --user " command)))
+    (let ((cmd (concat "/run/current-system/sw/bin/systemd-run --user " command)))
       (start-process-shell-command cmd nil cmd)))
   (exwm-input-set-key (kbd "s-SPC") 'exwm-run-systemd)
   (exwm-input-set-key (kbd "s-e") 'exwm-run-systemd)
