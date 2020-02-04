@@ -178,8 +178,12 @@
 (global-set-key (kbd "<f7>") 'split-window-right)
 (global-set-key (kbd "<f8>") 'delete-other-windows)
 
+;;; lsp-mode -- Language Server Protocol
 (require 'lsp-mode)
+;;; Use rls with rust
 (add-hook 'rust-mode-hook #'lsp)
+;;; Use gopls with golang
+(add-hook 'go-mode-hook #'lsp)
 
 ;;; emacs-convenience.el -- My emacs convenience settings
 ;;;
