@@ -27,14 +27,6 @@
 
 ;; evil ends here
 
-(setq godoc-and-godef-command "go doc") ;godoc has no cli support any more, thats go doc now
-(add-to-list 'exec-path "~/go/bin")
-(add-hook 'go-mode-hook
-(lambda ()
-  (setq-default)
-  (setq tab-width 2)
-  (setq standard-indent 2)
-  (setq indent-tabs-mode nil)))
 
 ;; helm
 
@@ -83,7 +75,20 @@
 (if (boundp 'org-user-agenda-files)
   (setq org-agenda-files org-user-agenda-files)
   (setq org-agenda-files (quote ("~/projects/notes_privat")))
-)
+  )
+
+;; begin golang
+(progn
+  ; godoc has no cli support any more, thats go doc now
+  (setq godoc-and-godef-command "go doc")
+  (add-to-list 'exec-path "~/go/bin")
+  (add-hook 'go-mode-hook
+              (lambda ()
+                (set (make-local-variable 'company-backends) '(company-go))
+                (company-mode t)
+                (yas-minor-mode-on))
+  (add-hook 'before-save-hook 'gofmt-before-save)))
+;; end golang
 
 ;; begin rust
 (setq racer-rust-src-path nil) ;; read from shell-nix
