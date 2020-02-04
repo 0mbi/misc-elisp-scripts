@@ -180,9 +180,9 @@
 
 ;;; lsp-mode -- Language Server Protocol
 (require 'lsp-mode)
-;;; Use rls with rust
+;; Use rls with rust
 (add-hook 'rust-mode-hook #'lsp)
-;;; Use gopls with golang
+;; Use gopls with golang
 (add-hook 'go-mode-hook #'lsp)
 
 ;;; emacs-convenience.el -- My emacs convenience settings
