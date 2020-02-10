@@ -171,12 +171,20 @@
   (term "/run/current-system/sw/bin/bash")
   (rename-buffer name)
 )
+
+(defun mh/ssh-term (name)
+  "Open a new bash, rename it and execute ssh-add on it"
+  (interactive "sName of SSH terminal: ")
+  (term "/run/current-system/sw/bin/bash")
+  (rename-buffer name)
+  (comint-send-string name "eval $(ssh-agent)\n")
+  (comint-send-string name "ssh-add\n")
+  )
+
 (global-set-key (kbd "M-<f8>") 'kill-actual-buffer)
 
 (global-set-key (kbd "<f5>") 'mh/open-term-and-rename)
-(global-set-key (kbd "<f6>") 'other-window)
-(global-set-key (kbd "<f7>") 'split-window-right)
-(global-set-key (kbd "<f8>") 'delete-other-windows)
+(global-set-key (kbd "<f6>") 'mh/ssh-term)
 
 ;;; lsp-mode -- Language Server Protocol
 (require 'lsp-mode)
