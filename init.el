@@ -246,7 +246,7 @@
   )
 
 (add-hook 'before-save-hook 'mh/before-save)
-(add-hook 'after-save-hook 'mh/after-save)
+; (add-hook 'after-save-hook 'mh/after-save)
 ;; end save hook
 
 (fset 'kill-actual-buffer
