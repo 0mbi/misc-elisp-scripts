@@ -291,6 +291,8 @@
   (setq auto-save-default nil)
   )
 
+;;; Ace for better window switching.
+(global-set-key (kbd "C-x o") 'ace-select-window)
 ;;; emacs-convenience.el ends here
 
 ;;; exwm.el -- My EXWM init file
@@ -389,6 +391,3 @@
 ;   (exwm-init))
 
 ;;; exwm.el ends here
-
-;;; Ace for better window switching.
-(global-set-key (kbd "C-x o") 'ace-select-window)
