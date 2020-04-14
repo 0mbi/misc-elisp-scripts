@@ -293,6 +293,14 @@
 
 ;;; Ace for better window switching.
 (global-set-key (kbd "C-x o") 'ace-select-window)
+
+;;; Common LISP setup
+(load (expand-file-name "~/quicklisp/slime-helper.el"))
+(setq inferior-lisp-program "sbcl")
+
+
+;;;
+
 ;;; emacs-convenience.el ends here
 
 ;;; exwm.el -- My EXWM init file
