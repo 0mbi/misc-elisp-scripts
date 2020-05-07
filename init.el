@@ -13,6 +13,7 @@
 
 
 (use-package org-bullets
+  :ensure t
   :config
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
@@ -28,23 +29,18 @@
 ;; Evil Mode
 ;;
 ;;
-(require 'evil)
-(evil-mode 1)
-
-;; TODO check if this is any useful
-;; (require 'evil-org)
-;; (add-hook 'org-mode-hook 'evil-org-mode)
-;; (evil-org-set-key-theme '(navigation insert textobjects additional calendar))
-;; (require 'evil-org-agenda)
-;; (evil-org-agenda-set-keys)
-
-;; evil ends here
+(use-package evil
+  :ensure t
+  :config
+  (evil-mode 1)
+)
 
 
 ;; helm
 
 ;; begin helm
 (use-package helm
+  :ensure t
   :defer 2
   :diminish helm-mode
   :bind (("C-x C-f" . helm-find-files)
@@ -64,6 +60,7 @@
     (helm-mode 1)))
 
 (use-package helm-fuzzier
+  :ensure t
   :defer 2
   :config
   (progn
@@ -73,12 +70,17 @@
           helm-recentf-fuzzy-match t)
     (helm-fuzzier-mode 1)))
 
-(use-package helm-ag)
+(use-package helm-ag
+  :ensure t)
 ;; end helm
 
-(global-set-key (kbd "C-x g") 'magit-status) ; "Most Magit commands are commonly invoked from the status buffer"
+(use-package magit
+  :ensure t
+  :config
+  (global-set-key (kbd "C-x g") 'magit-status) ; "Most Magit commands are commonly invoked from the status buffer"
+)
 
-(add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
+(Add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
@@ -188,33 +190,23 @@
 )
 (add-hook 'racer-mode-hook #'eldoc-mode)
 (add-hook 'racer-mode-hook #'company-mode)
-(require 'rust-mode)
-(define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
-(setq company-tooltip-align-annotations t)
+(use-package rust-mode
+  :ensure t
+  :config
+  (progn
+    (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
+    (setq company-tooltip-align-annotations t)))
 ;;end rust
 
-;; begin theming
-(load-theme 'spacemacs-dark t)
-(load-theme 'spacemacs-light t)
-(disable-theme 'spacemacs-light)
-(disable-theme 'spacemacs-dark)
-(enable-theme 'spacemacs-dark)
+(use-package solarized-theme
+  :ensure t)
 
-(defun mh/spacemacs-dark ()
-  (interactive)
-  (disable-theme 'spacemacs-light)
-  (enable-theme 'spacemacs-dark)
+(use-package helm-themes
+  :ensure t
+  :config
+  (progn
+  (global-set-key "\C-ct" 'helm-themes))
   )
-
-(defun mh/spacemacs-light ()
-  (interactive)
-  (disable-theme 'spacemacs-dark)
-  (enable-theme 'spacemacs-light)
-  )
-
-(global-set-key "\C-ctl" 'mh/spacemacs-light)
-(global-set-key "\C-ctd" 'mh/spacemacs-dark)
-;; end theming
 
 ;; begin emacs convenience
 (menu-bar-mode -1)
@@ -274,29 +266,40 @@
 (global-set-key (kbd "<f6>") 'mh/ssh-term)
 
 ;;; lsp-mode -- Language Server Protocol
-(require 'lsp-mode)
-;; Use rls with rust
-(add-hook 'rust-mode-hook #'lsp)
+(use-package lsp-mode
+  :ensure t
+  :config
+  (progn
+    (add-hook 'rust-mode-hook #'lsp)
 ;; Use gopls with golang
-(add-hook 'go-mode-hook #'lsp)
+    (add-hook 'go-mode-hook #'lsp)))
 
 ;;; emacs-convenience.el -- My emacs convenience settings
 ;;;
 ;;; global settings for all buffers
 
+(use-package company-mode
+  :ensure t)
+;  :config
+;  (progn
+;  (add-hook 'after-init-hook 'global-company-mode)))
+
+(add-hook 'after-init-hook
 (progn
   (global-hl-line-mode)
   (global-linum-mode)
-  (global-company-mode)
+ ; (global-company-mode)
   (setq auto-save-default nil)
-  )
+  ))
 
 ;;; Ace for better window switching.
 (global-set-key (kbd "C-x o") 'ace-select-window)
 
 ;;; Common LISP setup
-(load (expand-file-name "~/quicklisp/slime-helper.el"))
-(setq inferior-lisp-program "sbcl")
+;; check for slime-helper
+(when (file-exists-p  "~/quicklisp/slime-helper.el")
+  (load (expand-file-name "~/quicklisp/slime-helper.el"))
+  (setq inferior-lisp-program "sbcl"))
 
 
 ;;;
